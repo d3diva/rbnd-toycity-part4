@@ -17,42 +17,6 @@ class Product < Udacidata
     @price = opts[:price]
   end
 
-  def all
-
-  end
-
-  def first()
-
-  end
-
-  def last()
-
-  end
-
-  def find()
-
-  end
-
-  def find_by_brand(brand)
-
-  end
-
-  def find_by_name
-
-  end
-
-  def destroy()
-
-  end
-
-  def where()
-
-  end
-
-  def update()
-
-  end
-
   
 
 
