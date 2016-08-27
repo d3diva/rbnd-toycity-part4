@@ -1,4 +1,5 @@
 class Module
+
       def create_finder_methods(*attributes)
         attributes.each do |attribute|
           method = %Q{
@@ -9,5 +10,4 @@ class Module
           class_eval(method)
         end
      end
-     create_finder_methods(:brand, :name)
 end
