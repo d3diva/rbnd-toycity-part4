@@ -15,13 +15,7 @@ class Udacidata
 
   def self.all
     data = CSV.read(@@data_path, headers: true)
-    @@all_items = data.map { |item| self.new(id: item["id"], brand: item["brand"], name: item["product"], price: item["price"])}
-    #@@products = []
-    #CSV.read(@@data_path, headers: true).each do |product|
-    #  @@products << self.new(id: product["id"], brand: product["brand"], name: product["product"], price: product["price"])
-    #end
-    ##@@products.each { |e| puts "#{e.id} -- #{e.brand} -- #{e.name} -- #{e.price} "  }
-    #all_items
+    data.map { |item| self.new(id: item["id"], brand: item["brand"], name: item["product"], price: item["price"])}
   end
 
   def self.first(item = nil)
