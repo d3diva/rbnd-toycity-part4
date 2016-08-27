@@ -50,8 +50,5 @@ class Udacidata
     all.select { |item| item.brand == options[:brand]}
   end
 
-  def self.update(options = )
-
-  end
 
 end

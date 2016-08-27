@@ -1,11 +1,12 @@
 class Module
-	def create_finder_methods(*attributes)
-		attributes.each do |attribute|
-				defined_method("find_by_#{attribute}") do (arg)
-          all.each do |item|
-            return item if item.send(attribute.to_s) == arg.to_s
-          end
-        end
-		end
-	end
-end
+     def create_finder_methods(*attributes)
+       attributes.each do |attribute|
+         method = %Q{
+           def self.find_by_#{attribute}(val)
+             puts 'FIND BY********************#{val}'
+           end
+         }
+				 class_eval(method)
+       end
+     end
+   end
