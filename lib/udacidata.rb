@@ -14,8 +14,17 @@ class Udacidata
   end
 
   def self.all
-    data = CSV.read(@@data_path, headers: true)
-    data.map { |item| self.new(id: item["id"], brand: item["brand"], name: item["product"], price: item["price"])}
+    #data = CSV.read(@@data_path, headers: true)
+    #data.map { |item| self.new(id: item["id"], brand: item["brand"], name: item["product"], price: item["price"])}
+    all_products = []
+    CSV.foreach(@@data_path, headers: true) do |row|
+      all_products << self.new(id: row[0], brand: row[1], name: row[2], price: row[3])
+    end
+    all_products
+  end
+
+  def product_not_found(item)
+    raise ProductNotFoundErrors, "Error : '#{item}' does not Exist"
   end
 
   def self.first(item = nil)
@@ -27,27 +36,40 @@ class Udacidata
   end
 
   def self.find(item)
-    all.find { |e| e.id == item}
+    found_item = all.find { |e| e.id == item}
+    found_item == nil ? product_not_found(item) : found_item
+  end
+
+  def self.open_data
+    CSV.table(@@data_path)
+  end
+
+  def self.update_date(all_items)
+    File.open(@@data_path, 'w+') do |f|
+      f.write(all_items.to_csv)
+    end
+  end
+
+  def self.found_item_delete(item)
+    all_items = open_data
+    all_items.delete(item)
+    update_date(all_items)
   end
 
   def self.destroy(item)
     to_be_deleted = find(item)
-    all_items = CSV.table(@@data_path)
-    all_items.delete_if { |e| e[:id] == item}
-    File.open(@@data_path, 'w+') do |f|
-      f.write(all_items.to_csv)
-    end
+    to_be_deleted ? found_item_delete(item) : product_not_found(item)
     to_be_deleted
   end
 
   def self.where(val)
     #all.select { |item| item.brand == options[:brand]}
-    all.select! { |item| item.send(val.keys.first) == val.values.first}
+    where_found = all.select! { |item| item.send(val.keys.first) == val.values.first}
   end
 
   def update(options={})
       #Product.create(*attributes) if Product.destroy(Product.find(@id).id)
-      item = (Product.find(@id))
+      item = Product.find(@id)
       item.brand.replace(options[:brand]) if options[:brand]
       item.name.replace(options[:name])if options[:name]
       item.price.replace(options[:price].to_s) if options[:price]
