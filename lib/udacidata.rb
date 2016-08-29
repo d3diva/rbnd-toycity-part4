@@ -40,8 +40,18 @@ class Udacidata
     to_be_deleted
   end
 
-  def self.where(options ={})
+  def self.where(options={})
     all.select { |item| item.brand == options[:brand]}
+  end
+
+  def update(options={})
+      #Product.create(*attributes) if Product.destroy(Product.find(@id).id)
+      item = (Product.find(@id))
+      item.brand.replace(options[:brand]) if options[:brand]
+      item.name.replace(options[:name])if options[:name]
+      item.price.replace(options[:price].to_s) if options[:price]
+      Product.destroy(@id)
+      Product.create(id: @id, brand: item.brand, name: item.name, price: item.price.to_f)
   end
 
 
