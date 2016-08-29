@@ -41,7 +41,8 @@ class Udacidata
   end
 
   def self.where(options={})
-    all.select { |item| item.brand == options[:brand]}
+    #all.select { |item| item.brand == options[:brand]}
+    all.select! { |item| item.send(val.keys.first) == val.values.first}
   end
 
   def update(options={})
