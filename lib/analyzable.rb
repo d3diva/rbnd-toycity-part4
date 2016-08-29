@@ -3,15 +3,18 @@ module Analyzable
 
   def count_by_brand(products)
     brand = {}
-    #products.each do |product|
-    #    brand[product.brand] == nil ? brand[product.brand] = 1 : brand[product.brand] += 1
-    #end
-    brand = products.each { |product| brand[.product.brand].nil ? brand[.product.brand] = 1 : brand[.product.brand] +=1 }
+    products.each do |product|
+        brand[product.brand] == nil ? brand[product.brand] = 1 : brand[product.brand] += 1
+    end
+    brand
   end
 
   def count_by_name(products)
     name = {}
-    products.each
+    products.each do |product|
+      name[product.name] == nil ? name[product.name] = 1 : name[product.name] += 1
+    end
+    name
   end
 
   def average_price(products)

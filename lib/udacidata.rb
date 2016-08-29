@@ -40,7 +40,7 @@ class Udacidata
     to_be_deleted
   end
 
-  def self.where(options={})
+  def self.where(val)
     #all.select { |item| item.brand == options[:brand]}
     all.select! { |item| item.send(val.keys.first) == val.values.first}
   end
