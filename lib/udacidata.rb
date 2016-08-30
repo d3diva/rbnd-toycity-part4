@@ -24,7 +24,7 @@ class Udacidata
   end
 
   # product not found errror
-  def product_not_found(item)
+  def self.product_not_found(item)
     raise ProductNotFoundErrors, "Error : '#{item}' does not Exist"
   end
 

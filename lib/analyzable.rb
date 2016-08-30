@@ -11,22 +11,23 @@ module Analyzable
   end
 
   #returns average price for a given brand
-  def report_average_price(key)
-    self.class.average_price(Product.where(brand: key.to_s))
-  end
+  #def report_average_price(key)
+  #  self.class.average_price(Product.where(brand: key.to_s))
+  #end
 
-  # returns price of a given product
-  def name_average_price(name)
-    all_names = Product.where(name: name)
-  end
+  ## returns price of a given product
+  #def name_average_price(name)
+  #  all_names = Product.where(name: name)
+  #end
 
   #prints brand report with brand, quantity and average price
   def brand_report
+    display_average_price(average_price(Product.all))
     by_brand = count_by_brand(Product.all)
     display_title("Brand wise Inventry Report")
-    display_header("Name to the Brand", "Quantity", "Average Price")
+    display_header("Name to the Brand", "Quantity")
     by_brand.each do |key, value|
-      display_items(key, value, report_average_price(key))
+      display_items(key, value)
     end
     print_line
     puts ""
@@ -36,18 +37,17 @@ module Analyzable
   def report_by_name
     by_brand = count_by_name(Product.all)
     display_title("Name wise Inventry Report")
-    display_header("Name to the Product", "Quantity", "Price")
+    display_header("Name to the Product", "Quantity")
     by_brand.each do |key, value|
-      display_items(key, value, name_average_price(key).first.price)
+      display_items(key, value)
     end
     print_line
   end
 
   def print_report(all)
-    report = {}
+    report = ""
     brand_report
     report_by_name
-
-    #report.to_s
+    report.to_s
   end
 end
