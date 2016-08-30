@@ -29,13 +29,16 @@ class Udacidata
   end
 
   #returns first record or first few requred numbers of records
-  def self.first(item = nil)
-    item ? all.first(item) : all.first
+  def self.take_items(from, n=nil)
+        n ? all.send(from, n) : all.public_send(from)
   end
 
-  #returns last record or last few requred numbers of records
-  def self.last(item = nil)
-    item ? all.last(item) : all.last
+  def self.first(n=nil)
+    take_items(:first, n)
+  end
+
+  def self.last(n=nil)
+    take_items(:last, n)
   end
 
   # finds record with id
@@ -73,12 +76,8 @@ class Udacidata
   end
 
   # finds records with brand or name
-  def self.where(options={})
-    if options[:brand]
-      items = all.select { |item| item.brand == options[:brand]}
-    elsif options[:name]
-      items = all.select { |item| item.name == options[:name]}
-    end
+  def self.where(val)
+    items = all.select! { |item| item.send(val.keys.first) == val.values.first}
     return items
   end
 
