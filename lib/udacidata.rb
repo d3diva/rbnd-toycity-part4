@@ -57,16 +57,18 @@ class Udacidata
   end
 
   #delete record with id
-  def self.found_item_delete(item)
+  def self.found_item_delete(id)
     all_items = open_data
-    all_items.delete(item)
+    all_items.delete_if do |row|
+        row[:id] == id
+    end
     update_date(all_items)
   end
 
   # destroyes record
   def self.destroy(item)
     to_be_deleted = find(item)
-    to_be_deleted ? found_item_delete(item) : product_not_found(item)
+    to_be_deleted ? found_item_delete(to_be_deleted.id) : product_not_found(to_be_deleted.id)
     to_be_deleted
   end
 
